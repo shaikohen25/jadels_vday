@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Flip Card</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            perspective: 1200px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card {
+            width: 400px;
+            height: 500px;
+            perspective: 1000px;
+            transition: transform 0.6s ease-in-out, scale 0.6s ease-in-out;
+            position: relative;
+            z-index: 10;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+        .card.flipped {
+            transform: scale(0.9) translateZ(-50px);
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-front {
+            background: white;
+        }
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        .card-back {
+            background: white;
+            transform: rotateY(180deg);
+            font-style: italic;
+            font-size: 20px;
+            text-align: center;
+            padding: 20px;
+        }
+        .floating-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .floating-images {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = ['rose.png', 'heart.png'];
+            const container = document.querySelector('.floating-container');
+            for (let i = 0; i < 30; i++) {
+                let img = document.createElement('img');
+                img.src = images[Math.floor(Math.random() * images.length)];
+                img.classList.add('floating-images');
+                img.style.left = Math.random() * 90 + 'vw';
+                img.style.top = Math.random() * 90 + 'vh';
+                img.style.width = Math.random() * 60 + 20 + 'px';
+                img.style.height = img.style.width;
+                img.style.opacity = Math.random() * 0.6 + 0.4;
+                container.appendChild(img);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="floating-container"></div>
+    <div class="card" onclick="this.classList.toggle('flipped')">
+        <div class="card-inner">
+            <div class="card-front">
+                <img src="image.png" alt="Valentine Dog Image">
+            </div>
+            <div class="card-back">
+                <p>Dear jadels, 
+                    thank you for being the best girlfriend I could ever ask for. Love you more than you know, will you be my valentine? xx.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
